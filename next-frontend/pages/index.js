@@ -3,9 +3,18 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { createClient } from "next-sanity";
 import PortableText from "react-portable-text"
+import Link from 'next/link';
 import Script from "next/script"
+import { useEffect } from 'react';
+import imageUrlBuilder from '@sanity/image-url';
 
 export default function Home({ blogs }) {
+  const client = createClient({
+    projectId: 'y4vol20y',
+    dataset: 'production',
+    useCdn: true
+  })
+  const builder = imageUrlBuilder(client)
   return (
     <><>
       <Script src="/assets/js/main.js"></Script>
@@ -165,7 +174,7 @@ export default function Home({ blogs }) {
         </div>
       </div>
       <div
-        className="pointer-events-none fixed inset-0 z-70 min-h-screen bg-black bg-opacity-70 opacity-0 transition-opacity lg:hidden" /> 
+        className="pointer-events-none fixed inset-0 z-70 min-h-screen bg-black bg-opacity-70 opacity-0 transition-opacity lg:hidden" />
       <div className="hidden absolute right-0 min-h-screen w-2/3 bg-primary py-4 px-8 shadow md:w-1/3">
         <button className="absolute top-0 right-0 mt-4 mr-4">
           <img src="/assets/img/icon-close.svg" className="h-10 w-auto" alt="" />
@@ -331,7 +340,7 @@ export default function Home({ blogs }) {
                 <h3 className="font-body text-3xl font-bold text-primary">85%</h3>
               </div>
               <div className="mt-2 h-3 w-full rounded-full bg-lila">
-                <div className="h-3 rounded-full bg-primary" style={{"width": "85%"}}></div>
+                <div className="h-3 rounded-full bg-primary" style={{ "width": "85%" }}></div>
               </div>
             </div>
             <div className="pt-6">
@@ -351,7 +360,7 @@ export default function Home({ blogs }) {
                 <h3 className="font-body text-3xl font-bold text-primary">98%</h3>
               </div>
               <div className="mt-2 h-3 w-full rounded-full bg-lila">
-                <div className="h-3 rounded-full bg-primary" style={{"width": "98%"}}></div>
+                <div className="h-3 rounded-full bg-primary" style={{ "width": "98%" }}></div>
               </div>
             </div>
             <div className="pt-6">
@@ -655,7 +664,7 @@ export default function Home({ blogs }) {
       </div>
 
       <div className="bg-cover bg-top bg-no-repeat pb-16 md:py-16 lg:py-24"
-        style={{"backgroundImage": "url(/assets/img/experience-figure.png)"}} id="statistics">
+        style={{ "backgroundImage": "url(/assets/img/experience-figure.png)" }} id="statistics">
         <div className="container">
           <div className="mx-auto w-5/6 bg-white py-16 shadow md:w-11/12 lg:py-20 xl:py-24 2xl:w-full">
             <div className="grid grid-cols-2 gap-5 md:gap-8 xl:grid-cols-4 xl:gap-5">
@@ -731,55 +740,24 @@ export default function Home({ blogs }) {
             Check out my latest posts!
           </h4>
           <div className="mx-auto grid w-full grid-cols-1 gap-6 pt-12 sm:w-3/4 lg:w-full lg:grid-cols-3 xl:gap-10">
-            <a href="/post" className="shadow">
-              <div style={{"backgroundImage": "url(/assets/img/post-01.png)"}}
-                className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-64 xl:h-72">
-                <span
-                  className="absolute inset-0 block bg-gradient-to-b from-blog-gradient-from to-blog-gradient-to bg-cover bg-center bg-no-repeat opacity-10 transition-opacity group-hover:opacity-50"></span>
-                <span
-                  className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-white px-6 py-2 text-center font-body text-sm font-bold uppercase text-white md:text-base">Read
-                  More</span>
-              </div>
-              <div className="bg-white py-6 px-5 xl:py-8">
-                <span className="block font-body text-lg font-semibold text-black">How to become a frontend
-                  developer</span>
-                <span className="block pt-2 font-body text-grey-20">Lorem ipsum dolor sit amet, consectetur adipiscing
-                  elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
-              </div>
-            </a>
-            <a href="/post" className="shadow">
-              <div style={{"backgroundImage": "url(/assets/img/post-02.png)"}}
-                className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-64 xl:h-72">
-                <span
-                  className="absolute inset-0 block bg-gradient-to-b from-blog-gradient-from to-blog-gradient-to bg-cover bg-center bg-no-repeat opacity-10 transition-opacity group-hover:opacity-50"></span>
-                <span
-                  className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-white px-6 py-2 text-center font-body text-sm font-bold uppercase text-white md:text-base">Read
-                  More</span>
-              </div>
-              <div className="bg-white py-6 px-5 xl:py-8">
-                <span className="block font-body text-lg font-semibold text-black">My personal productivity system</span>
-                <span className="block pt-2 font-body text-grey-20">Lorem ipsum dolor sit amet, consectetur adipiscing
-                  elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
-              </div>
-            </a>
-            <a href="/post" className="shadow">
-              <div style={{"backgroundImage": "url(/assets/img/post-03.png)"}}
-                className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-64 xl:h-72">
-                <span
-                  className="absolute inset-0 block bg-gradient-to-b from-blog-gradient-from to-blog-gradient-to bg-cover bg-center bg-no-repeat opacity-10 transition-opacity group-hover:opacity-50"></span>
-                <span
-                  className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-white px-6 py-2 text-center font-body text-sm font-bold uppercase text-white md:text-base">Read
-                  More</span>
-              </div>
-              <div className="bg-white py-6 px-5 xl:py-8">
-                <span className="block font-body text-lg font-semibold text-black">My year in review 2020</span>
-                <span className="block pt-2 font-body text-grey-20">Lorem ipsum dolor sit amet, consectetur adipiscing
-                  elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
-              </div>
-            </a>
+            {blogs.map((item) => (
+              <Link href={`${'/blog/' + item.slug.current}`} className="shadow" key={item.slug.current}>
+                <div>
+                  <div style={{ "backgroundImage": `url(${builder.image(item.blogimage).width(200).url() || '/asset/ig/post-01.png'})` }}
+                    className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-64 xl:h-72">
+                    <span
+                      className="absolute inset-0 block bg-gradient-to-b from-blog-gradient-from to-blog-gradient-to bg-cover bg-center bg-no-repeat opacity-10 transition-opacity group-hover:opacity-50"></span>
+                    <span
+                      className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-white px-6 py-2 text-center font-body text-sm font-bold uppercase text-white md:text-base cursor-pointerf">Read
+                      More</span>
+                  </div>
+                  <div className="bg-white py-6 px-5 xl:py-8">
+                    <span className="block font-body text-lg font-semibold text-black">{item.title}</span>
+                    <span className="block pt-2 font-body text-grey-20">{item.metadesc}</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
@@ -855,10 +833,10 @@ export default function Home({ blogs }) {
       </div>
 
       <div className="h-72 bg-cover bg-center bg-no-repeat sm:h-64 md:h-72 lg:h-96"
-        style={{"backgroundImage": "url(/assets/img/map.png)"}}></div>
+        style={{ "backgroundImage": "url(/assets/img/map.png)" }}></div>
 
       <div className="relative bg-primary bg-cover bg-center bg-no-repeat py-16 bg-blend-multiply lg:py-24"
-        style={{"backgroundImage": "url(/assets/img/bg-cta.jpg)"}}>
+        style={{ "backgroundImage": "url(/assets/img/bg-cta.jpg)" }}>
         <div className="container relative z-30">
           <h3
             className="text-center font-header text-3xl uppercase leading-tight tracking-wide text-white sm:text-4xl lg:text-5xl">
@@ -899,7 +877,7 @@ export default function Home({ blogs }) {
             </div>
           </div>
         </div></></>
-     
+
     // <div className="home mx-8">
     //   <h1>{blogs[0].title}</h1>
     //   <div className="mx-8">
