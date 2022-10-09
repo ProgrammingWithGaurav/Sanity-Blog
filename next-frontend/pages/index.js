@@ -1,20 +1,22 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { createClient } from "next-sanity";
 
 import Script from "next/script"
+import { useEffect } from 'react';
 import imageUrlBuilder from '@sanity/image-url'
 import Link from 'next/link'
 
-export default function Home({ blogs }) {
+export default function Home({ blogs, profile}) {
   const client = createClient({
     projectId: "y4vol20y",
     dataset: "production",
     useCdn: false
   });
   const builder = imageUrlBuilder(client)
-  
-  
+  console.log(builder.image(profile.image).width(200).url()  )
+
   return (
     <><>
       <Script src="/assets/js/main.js"></Script>
@@ -27,7 +29,7 @@ export default function Home({ blogs }) {
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
           name="viewport" />
 
-        <title>Homepage | Atom Template</title>
+        <title>{profile.title} - Developer | Coder | Software Geek</title>
 
         <meta property="og:title" content="Homepage | Atom Template" />
 
@@ -94,7 +96,7 @@ export default function Home({ blogs }) {
         <div className="container flex items-center justify-between">
           <div>
             <a href="/">
-              <img src="/assets/img/logo.svg" className="w-24 lg:w-48" alt="logo image" />
+             <h2 className='text-white text-2xl font-bold'>{profile.title}</h2>
             </a>
           </div>
           <div className="hidden lg:block">
@@ -249,11 +251,11 @@ export default function Home({ blogs }) {
         <div className="container relative z-30 pt-20 pb-12 sm:pt-56 sm:pb-48 lg:pt-64 lg:pb-48">
           <div className="flex flex-col items-center justify-center lg:flex-row">
             <div className="rounded-full border-8 border-primary shadow-xl">
-              <img src="/assets/img/blog-author.jpg" className="h-48 rounded-full sm:h-56" alt="author" />
+              <img src={profile.image && builder.image(profile.image).width(200).url() || 'https://avatars.githubusercontent.com/u/88154142?v=4'} className="h-48 rounded-full sm:h-56" alt="author" />
             </div>
             <div className="pt-8 sm:pt-10 lg:pl-8 lg:pt-0">
               <h1 className="text-center font-header text-4xl text-white sm:text-left sm:text-5xl md:text-6xl">
-                Hello I'm Christy Smith!
+                Hello I'm {profile.name}!
               </h1>
               <div className="flex flex-col justify-center pt-3 sm:flex-row sm:pt-5 lg:justify-start">
                 <div className="flex items-center justify-center pl-0 sm:justify-start md:pl-1">
@@ -263,10 +265,10 @@ export default function Home({ blogs }) {
                   </div>
                 </div>
                 <div className="flex items-center justify-center pt-5 pl-2 sm:justify-start sm:pt-0">
-                  <a href="/">
+                  <a href={profile.fbLink}>
                     <i className="bx bxl-facebook-square text-2xl text-white hover:text-yellow"></i>
                   </a>
-                  <a href="/" className="pl-4">
+                  <a href={profile.twitterLink} className="pl-4">
                     <i className="bx bxl-twitter text-2xl text-white hover:text-yellow"></i>
                   </a>
                   <a href="/" className="pl-4">
@@ -275,11 +277,14 @@ export default function Home({ blogs }) {
                   <a href="/" className="pl-4">
                     <i className="bx bxl-linkedin text-2xl text-white hover:text-yellow"></i>
                   </a>
-                  <a href="/" className="pl-4">
+                  <a href={profile.instagramLink} className="pl-4">
                     <i className="bx bxl-instagram text-2xl text-white hover:text-yellow"></i>
                   </a>
                 </div>
               </div>
+                <Link href={'/blogs'}><div className="buttons text-center md:text-left">
+                  <button className='bg-purple-600 text-white border-2 px-4 py-1 my-4 rounded-2xl'>All Blogs</button>
+                </div></Link>
             </div>
           </div>
         </div>
@@ -908,7 +913,6 @@ export default function Home({ blogs }) {
             </div>
           </div>
         </div></></>
-     
   )
 }
 
@@ -921,10 +925,14 @@ export async function getServerSideProps(context) {
   });
   const query = `*[_type == "blog"][0...3]`;
   const blogs = await client.fetch(query);
-  console.log(blogs.length)
+
+  const profileQuery = `*[_type == "profile"][0]`;
+  const profile = await client.fetch(profileQuery);
+
   return {
     props: {
-      blogs
+      blogs,
+      profile
     }
   }
 }
