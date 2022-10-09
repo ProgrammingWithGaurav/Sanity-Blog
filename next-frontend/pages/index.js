@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import { createClient } from "next-sanity";
 
 import Script from "next/script"
 import { useEffect } from 'react';
 import imageUrlBuilder from '@sanity/image-url'
 import Link from 'next/link'
+import NavBar from './components/NavBar';
 
 export default function Home({ blogs, profile}) {
   const client = createClient({
@@ -15,8 +15,19 @@ export default function Home({ blogs, profile}) {
     useCdn: false
   });
   const builder = imageUrlBuilder(client)
-  console.log(builder.image(profile.image).width(200).url()  )
 
+  // (OPTIONAL)
+
+  // const profile = {
+  //   title: "WorkWithGaurav",
+  //   name: "Gaurav",
+  //   image: "https://avatars.githubusercontent.com/u/88154142?v=4",
+  //   fbLink: "https://facebook.com/",
+  //   twitterLink: "https://twitter.com/",
+  //   instagramLink: "https://instagram.com/",
+  // }
+  
+  
   return (
     <><>
       <Script src="/assets/js/main.js"></Script>
@@ -91,8 +102,9 @@ export default function Home({ blogs, profile}) {
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 
-      </Head>
-      <div className="w-full z-50 top-0 py-3 sm:py-5  absolute ">
+      </Head> 
+      <NavBar profile={profile} />
+      {/* <div className="w-full z-50 top-0 py-3 sm:py-5  absolute ">
         <div className="container flex items-center justify-between">
           <div>
             <a href="/">
@@ -174,7 +186,7 @@ export default function Home({ blogs, profile}) {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
       <div
         className="pointer-events-none fixed inset-0 z-70 min-h-screen bg-black bg-opacity-70 opacity-0 transition-opacity lg:hidden" /> 
       <div className="hidden absolute right-0 min-h-screen w-2/3 bg-primary py-4 px-8 shadow md:w-1/3">
@@ -251,7 +263,7 @@ export default function Home({ blogs, profile}) {
         <div className="container relative z-30 pt-20 pb-12 sm:pt-56 sm:pb-48 lg:pt-64 lg:pb-48">
           <div className="flex flex-col items-center justify-center lg:flex-row">
             <div className="rounded-full border-8 border-primary shadow-xl">
-              <img src={profile.image && builder.image(profile.image).width(200).url() || 'https://avatars.githubusercontent.com/u/88154142?v=4'} className="h-48 rounded-full sm:h-56" alt="author" />
+              <img src={builder.image(profile.image).width(200).url()} className="h-48 rounded-full sm:h-56" alt="author" />
             </div>
             <div className="pt-8 sm:pt-10 lg:pl-8 lg:pt-0">
               <h1 className="text-center font-header text-4xl text-white sm:text-left sm:text-5xl md:text-6xl">

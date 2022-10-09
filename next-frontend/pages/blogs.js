@@ -3,12 +3,14 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { createClient } from "next-sanity";
+import PortableText from "react-portable-text"
 import Script from "next/script"
+import { useEffect } from 'react';
 import imageUrlBuilder from '@sanity/image-url'
 import Link from 'next/link'
 import NavBar from './components/NavBar';
 
-const Blogs = ({blogs}) => {
+const Blogs = ({blogs, profile}) => {
     const client = createClient({
         projectId: "y4vol20y",
         dataset: "production",
@@ -16,9 +18,13 @@ const Blogs = ({blogs}) => {
       });
       const builder = imageUrlBuilder(client)
       
+      useEffect(() => {
+        console.log("thsnks") 
+        
+      }, [])
   return (
     <div>
-        <NavBar/>
+        <NavBar profile={profile} />
          <div className="bg-grey-50 my-12" id="blog">
         <div className="container mx-auto py-16 md:py-20">
           <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
@@ -63,11 +69,12 @@ export async function getServerSideProps(context) {
       useCdn: false
     });
     const query = `*[_type == "blog"]`;
-    const blogs = await client.fetch(query);
-    console.log(blogs.length)
+    const blogs = await client.fetch(query); 
+    const profileQuery = `*[_type == "profile"][0]`;
+    const profile = await client.fetch(profileQuery);
     return {
       props: {
-        blogs
+        blogs, profile
       }
     }
   }
